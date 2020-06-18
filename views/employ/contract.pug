@@ -1,0 +1,14 @@
+extends ../ntent
+    include ../navigation
+    //- cs=contractSet, user=currentUser
+    p ContractSet1
+    p 10 Times
+    p #{cs.dataValues.cost10}
+    p 20 Times
+    p #{cs.da taValues.cost20}
+    p 30 Times
+    p #{cs.dataValues.cost30}
+    if user.usertype==1
+        button.btn.btn-warning Can't Contract
+    if user.usertype==2
+        a.btn.btn-primary(href=`/employ/${trainer_id}/contract/${user.id}`) Contract

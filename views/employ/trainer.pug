@@ -1,0 +1,8 @@
+//- trainer 한 명에 대한 정보 출력. 서버에서 트레이너 정보 넘겨받음. 예쁘게 만들어줄것
+//- contract 신청할 수 있게 만들어서 /employ/<id>/contract 주소로 redirect.
+extends ../layout
+block content
+    include ../navigation
+    //- trainerInfo 보여주기
+    br
+    a(href="/employ/#{trainer_id}/contract" class="btn btn-primary") Contract

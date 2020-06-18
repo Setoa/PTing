@@ -1,0 +1,10 @@
+extends layout
+block content
+  - if(title === "Someone")
+    a(href="/users/signin") Sign in
+    br
+    a(href="/users/signup") Sign up
+  - else
+    include navigation
+  h1= title
+  p Welcome to #{title}
