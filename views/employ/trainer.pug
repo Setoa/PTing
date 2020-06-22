@@ -3,6 +3,118 @@
 extends ../layout
 block content
     include ../navigation
-    //- trainerInfo 보여주기
+    .container
+        .row.text-center
+            .col-md-12
+                h1 Trainer Detail
+                br
+                br
+                .row
+                    .col-md-6
+                        img(alt="Trainer image" src="https://topclass.chosun.com/news_img/1602/1602_108_2.jpg" width="350" height="300")
+                    .col-md-6
+                        .infoee
+                            ul
+                                - const tData=trainer
+                                li.list-item Name : #{tData.user.username}
+                                li.list-item E-Mail : #{tData.user.email}
+        .row
+            .col-md-12
+                h3 Trainer Information
+                .row
+                    .col-md-8
+                        table(text-align="center")
+                            thead
+                                tr
+                                    th 자격증 이름
+                                    th 자격증 번호
+                            tbody
+                                tr
+                                    td 생활스포츠지도자
+                                    td KF162836
+                                tr
+                                    td 요가지도자
+                                    td LE001921
+                    .col-md-4
+                        table
+                            thead
+                                tr
+                                    th
+                                        h4 경력 사항
+                            tbody
+                                tr
+                                    td=trainerinfo.dataValues.career
+        - if(currentUser.usertype==2)
+            a(href=`/employ/${tData.id}/contract` class="btn btn-primary") Contract
+        - if(currentUser.usertype==1)
+            button.btn.btn-warning Contract
     br
-    a(href="/employ/#{trainer_id}/contract" class="btn btn-primary") Contract
+    br
+    br
+
+
+    .container
+        .row.text-center
+            h3 Timetable
+            table.text-center(style="margin:auto;")
+                thead
+                tbody.TimeSheet
+                    tr
+                        td.TimeSheet-head Date / Time
+                        td.TimeSheet-colHead 09
+                        td.TimeSheet-colHead 10
+                        td.TimeSheet-colHead 11
+                        td.TimeSheet-colHead 12
+                        td.TimeSheet-colHead 13
+                        td.TimeSheet-colHead 14
+                        td.TimeSheet-colHead 15
+                        td.TimeSheet-colHead 16
+                        td.TimeSheet-colHead 17
+                        td.TimeSheet-colHead 18
+                        td.TimeSheet-colHead 19
+                        td.TimeSheet-colHead 20
+                        td.TimeSheet-colHead 21
+                    tr
+                        td.TimeSheet-rowHead Monday
+                        - for(let i=0; i<13; i++)
+                            td.TimeSheet-cell(data-date="0", data-time=`${i}`)
+                        
+                    tr
+                        td.TimeSheet-rowHead Tuesday
+                        - for(let i=0; i<13; i++)
+                            td.TimeSheet-cell(data-date="1", data-time=`${i}`)
+                    tr
+                        td.TimeSheet-rowHead Wednesday
+                        - for(let i=0; i<13; i++)
+                            td.TimeSheet-cell(data-date="2", data-time=`${i}`)
+                    tr
+                        td.TimeSheet-rowHead Thursday
+                        - for(let i=0; i<13; i++)
+                            td.TimeSheet-cell(data-date="3", data-time=`${i}`)
+                    tr
+                        td.TimeSheet-rowHead Friday
+                        - for(let i=0; i<13; i++)
+                            td.TimeSheet-cell(data-date="4", data-time=`${i}`)
+                    tr
+                        td.TimeSheet-rowHead Saturday
+                        - for(let i=0; i<13; i++)
+                            td.TimeSheet-cell(data-date="5", data-time=`${i}`)
+                    tr
+                        td.TimeSheet-rowHead Sunday
+                        - for(let i=0; i<13; i++)
+                            td.TimeSheet-cell(data-date="6", data-time=`${i}`)
+
+        
+
+    script.
+        $("td").each(function(index,item){
+            if(timetable){
+                for slot in timetable{
+                    let slotData=slot.dataValues;
+                    if(slotData.date==$(item).data("date") && slotData.time==$(item).data("time")){
+                        $(item).data("user-id",slotData.user_id);
+                        $(item).addClass("TimeSheet-cell-block");
+                    }
+                }
+            }
+        });

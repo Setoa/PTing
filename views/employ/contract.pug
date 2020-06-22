@@ -1,14 +1,56 @@
-extends ../ntent
+extends ../layout
+block content
     include ../navigation
-    //- cs=contractSet, user=currentUser
-    p ContractSet1
-    p 10 Times
-    p #{cs.dataValues.cost10}
-    p 20 Times
-    p #{cs.da taValues.cost20}
-    p 30 Times
-    p #{cs.dataValues.cost30}
-    if user.usertype==1
-        button.btn.btn-warning Can't Contract
-    if user.usertype==2
-        a.btn.btn-primary(href=`/employ/${trainer_id}/contract/${user.id}`) Contract
+    h1.text-center Contract
+    br
+    br
+    form(action=`/employ/${trainer_id}/contract/${user.id}`, method='post')
+        .container-fluid
+            .row.text-center
+                .col-lg-12
+                    .col-lg-4(style='float : left; width : 33%')
+                        .card
+                            .card-body
+                            h6.card-price.text-center PT 10 times
+                            hr
+                            ul.fa-ul
+                                li
+                                span 10 
+                                span times
+                                li 
+                                span=cs.dataValues.cost10
+                                span $
+                        hr
+                        input.text-center(type='radio', name='checkContract', value='1')
+                    .col-lg-4(style='float : left; width : 33%')
+                        .card
+                            .card-body
+                            h6.card-price.text-center PT 20 times
+                            hr
+                            ul.fa-ul
+                                li
+                                span 20
+                                span times
+                                li
+                                span=cs.dataValues.cost10
+                                span $
+                        hr
+                        input.text-center(type='radio', name='checkContract', value='2')
+                    .col-lg-4(style='float : left; width : 33%')
+                        .card.mb-5.mb-lg-0
+                            .card-body
+                            h6.card-price.text-center PT 30 times 
+                            hr
+                            ul.fa-ul
+                                li
+                                span 30
+                                span times
+                                li
+                                span=cs.dataValues.cost10
+                                span $
+                        hr
+                        input.text-center(type='radio', name='checkContract', value='3')
+            br
+            br
+            div(align='center')
+                button.btn.btn-primary(type='submit') Payment

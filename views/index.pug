@@ -1,5 +1,6 @@
 extends layout
 block content
+  div.container.text-center
   - if(title === "Someone")
     a(href="/users/signin") Sign in
     br
@@ -7,4 +8,4 @@ block content
   - else
     include navigation
   h1= title
-  p Welcome to #{title}
+  p Welcome to PTing

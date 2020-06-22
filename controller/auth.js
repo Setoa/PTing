@@ -6,16 +6,15 @@ module.exports = {
         next();
     },
     isTrainer: function(req, res, next) {
-        if(req.user.usertype==1) {
+        if(req.user.usertype!=1) {
             return res.redirect('/');
         }
         next();
     },
     isTrainee: function (req, res, next) {
-        if (req.user.usertype == 2) {
+        if (req.user.usertype != 2) {
             return res.redirect('/');
         }
         next();
     }
-
 };

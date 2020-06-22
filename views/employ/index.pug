@@ -4,22 +4,21 @@ extends ../layout
 block content
     include ../navigation
     .container-fluid
+        p
+            h1   Trainer List
         .row
             .col-md-12
                 table.table.table-bordered
                     thead
                         tr
                             th #
-                            th E-mail
                             th Name
-                            th TrainerInfo
+                            th E-mail
                     tbody
                         each row in rows.rows    
-                            //- rows is trainers list
                             - const rowData=row.dataValues;
                             tr
                                 td=rowData.id
-                                td=rowData.user.dataValues.email
                                 td
                                     a(href=`/employ/${rowData.id}`)=rowData.user.dataValues.username
-                                //- div=rowData.TrainerInfo;  추후 trainer information 확정되면 추가할 것.
+                                td=rowData.user.dataValues.email

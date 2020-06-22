@@ -2,11 +2,6 @@ extends ../layout
 block content
     div.text-center
         form(class="form-signin" method="POST" action="/users/signup")
-            #error
-                if error1
-                    p.text-danger Error!!! Duplicated Email!!!
-                if error2
-                    p.text-danger Error!!! Password do NOT match!!!
             - var h1Classes = ['h3', 'mb-3', 'font-weight-normal']
             h1(class=h1Classes) Sign Up
             //-input username
@@ -22,10 +17,9 @@ block content
             label(for="inputPassword2" class="sr-only") Password Confirm
             input(type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm Your Password" required)
             //- User type
-            if (usertype==1) 
-                //- router에서 rendering 하는 과정에서 usertype 정하고 같이 전달해준다.
+            - if (usertype==1)    
                 include usertype_trainer
-            else
+            - else
                 include usertype_trainee
             //-signIn button
             - var buttonClass=['btn', 'btn-lg', 'btn-primary', 'btn-block'];

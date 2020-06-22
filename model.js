@@ -34,8 +34,8 @@ const Trainer = sequelize.define("trainer", {
     verify:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 0
-    }//인증된 트레이너인지 아닌지. 0이면 X, 1이면 ok
+        defaultValue: 1
+    }//인증된 트레이너인지 아닌지. 0이면 X, 1이면 ok. Trainer info 미구현 이므로 1로설정.
 },
 {
     timestamps: false,
@@ -61,7 +61,7 @@ const Contract = sequelize.define("contract", {
     trainee_id: {
         type: Sequelize.INTEGER,
         allowNull: false
-    }, //trainer가 직접 생성함. 근데 계약을 하는건 또 trainee가 하는거니까 만들때는 공백으로 납둠.
+    },
     pt_number: {
         type:Sequelize.INTEGER,
         allowNull: false
@@ -69,7 +69,11 @@ const Contract = sequelize.define("contract", {
     pt_cost: {
         type:Sequelize.INTEGER,
         allowNull: false
-    } // PT 가격.(합한 것)
+    }, // PT 가격.(합한 것)
+    pt_remain: {
+        type:Sequelize.INTEGER,
+        allowNull: false
+    } //남은 PT 횟수. Body Profile 작성 시 마다 차감되는 부분.
 },
 {
     timestamps: false,
@@ -105,23 +109,10 @@ const TrainerInfo = sequelize.define("trainerinfo", {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    age: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    exp: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    }, //경력 년수. 몇 년.
     career: {
         type: Sequelize.TEXT,
         allowNull: false
     }, //career. 자유 기재.
-    cert: {
-        type: Sequelize.TEXT,
-        allowNull: false
-    }   // certification. 자격증. parsing해서 자격증 기존에 있던 목록과 대조해서 비교하고 
-        // 일치하는 string 다수 존재 시 trainer의 verify를 1로 update.
 },
 {
     timestamps: false,
@@ -150,20 +141,42 @@ const BodyProfile = sequelize.define("bodyprofile", {
         type: Sequelize.DOUBLE,
         allowNull: false
     }, //소수점 한자리까지. kg/cm =>직접 입력하는 값이 아니라 height, weight로 계산할 것.
-    metabolic: {
+    bmr: {
         type: Sequelize.INTEGER,
         allowNull: false
     }, //kcal. =>직접 입력하는게 아니라 height, weight로 계산할 것.
     note: {
         type: Sequelize.TEXT,
         allowNull: true
-    }   //미션 박아주던가 진짜 조언같은거 적어주는 칸. 근데 그냥 생각해본건데
-        //체크박스 해서 TODO LIST로 미션 하는거도 괜찮을거 같은데?? 
+    }   //미션 박아주던가 진짜 조언같은거 적어주는 칸.
 },
 {
     timestamps: true, //시간별로 저장해주기 위함
     freezeTableName: true
 });
+
+const Certification=sequelize.define('certification',{
+    trainer_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    cert_name: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    cert_string: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    cert_number: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+}, 
+{
+    timestamps: false,
+    freezeTableName: true
+})
 
 const CertList=sequelize.define('certlist',{
     cert_name:{
@@ -188,17 +201,28 @@ const CertList=sequelize.define('certlist',{
     freezeTableName: true
 });
 
-// Timetable. 데이터 어떻게 넣을지 생각하고 나서 디비에 넣자. 내가 찾아볼 부분.
-// const Timetable = sequelize.define("timetable", {
-//     trainer_id: {
-//         type: Sequelize.INTEGER,
-//         allowNull: false
-//     }
-// },
-// {
-//     timestamps: false,
-//     freezeTableName: true
-// }); 
+const Timetable = sequelize.define("timetable", {
+    trainer_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    date: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    time: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    }
+},
+{
+    timestamps: false,
+    freezeTableName: true
+}); 
 
 User.hasOne(Trainer, { foreignKey: "uid" });
 Trainer.belongsTo(User, { foreignKey: "uid" });
@@ -215,14 +239,17 @@ Contract.belongsTo(Trainee, { foreignKey: "trainee_id" });
 Trainer.hasOne(ContractSet, { foreignKey: "trainer_id"});
 ContractSet.belongsTo(Trainer, { foreignKey: "trainer_id" });
 
-// Trainer.hasOne(Timetable, { foreignKey: "trainer_id"});
-// Timetable.belongsTo(Trainer, { foreignKey: "trainer_id" });
+Trainer.hasOne(Timetable, { foreignKey: "trainer_id"});
+Timetable.belongsTo(Trainer, { foreignKey: "trainer_id" });
 
 Trainee.hasOne(BodyProfile, { foreignKey: "trainee_id" });
 BodyProfile.belongsTo(Trainee, { foreignKey: "trainee_id" });
 
 Trainer.hasMany(TrainerInfo, { foreignKey: "trainer_id" });
 TrainerInfo.belongsTo(Trainer, { foreignKey: "trainer_id" });
+
+Trainer.hasMany(Certification, { foreignKey: "trainer_id" });
+Certification.belongsTo(Trainer, { foreignKey: "trainer_id" });
 
 module.exports = {
     sequelize: sequelize,
@@ -233,5 +260,5 @@ module.exports = {
     ContractSet: ContractSet,
     BodyProfile: BodyProfile,
     TrainerInfo: TrainerInfo,
-    //Timetable: Timetable
+    Timetable: Timetable
 };

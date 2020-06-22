@@ -22,18 +22,70 @@ body {
   height: auto;
   padding: 10px;
   font-size: 16px;
+  margin-bottom: 10px;
 }
 .form-signin .form-control:focus {
   z-index: 2;
 }
 .form-signin input[type="email"] {
-  margin-bottom: -1px;
+  
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 .form-signin input[type="password"] {
-  margin-bottom: 10px;
+  
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
+#inputpassword2{
+  font-size:x-large;
+}
+
+.navbar{
+  margin-bottom: 10px;
+}
+
+tbody.TimeSheet{
+    -webkit-user-select:none;
+    -moz-user-select : none;
+    user-select : none;
+    border : #cccccc 1px solid;
+    color : #757a7d;
+    font-size: 12px;
+    cursor:default;
+    display: block;
+    border-collapse: collapse;
+}
+
+.TimeSheet td{
+    border : #e3e3e3 1px solid;
+}
+
+.TimeSheet-cell-selected{
+    background-color: #b4def9;
+}
+
+.TimeSheet-rowHead, .TimeSheet-colHead{
+    background-color: #fbf0ed;
+}
+
+.TimeSheet-cell-block{
+    background-color: lightcoral;
+}
+
+.TimeSheet-rowHead{
+    padding:3px 10px;
+    border-left:none !important;
+}
+
+.TimeSheet-colHead{
+    padding: 6px 3px 6px 3px;
+    border-top:none !important;
+}
+
+.TimeSheet-head{
+    text-align: center;
+    border-top:none !important;
+    border-left:none !important;
+}

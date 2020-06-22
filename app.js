@@ -7,7 +7,8 @@ const flash=require('connect-flash');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const employRouter = require('./routes/employ');
-const mypageRouter = require('./routes/mypage');
+const detailRouter = require('./routes/detail');
+const scheduleRouter=require('./routes/schedule');
 const bodyParser=require('body-parser');
 const session=require('express-session');
 const passport=require('passport');
@@ -43,7 +44,8 @@ passportConfig();
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/employ', employRouter);
-app.use('/mypage', mypageRouter);
+app.use('/detail', detailRouter);
+app.use('/schedule', scheduleRouter);
 
 
 syncDB.sync().then(() => {

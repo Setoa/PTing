@@ -1,5 +1,19 @@
 extends ../layout
 block content
     include ../navigation
-    //- payment 처리해주기.
-    //- contract page에서 넘어옴.
+    
+    p Current Contract
+    ul
+        li Trainer : #{username}
+        li Cost : #{contract.dataValues.pt_cost}
+        li Time : #{contract.dataValues.pt_number}
+
+    p Payment
+    form(method="POST" action=`/employ/payment/${contract.dataValues.id}`)
+        label(for="credit") Credit Account Number : 
+        input(type="text" name="creditNum" id="credit")
+        br
+        label(for="expiry") Expiry Date : 
+        input(type="text" name="expiryDate" id="expiry")
+        br
+        button(type="submit") Pay
