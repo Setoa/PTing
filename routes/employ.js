@@ -11,9 +11,9 @@ router.get('/', data.getTrainerList, function(req,res,next){
     //trainers는 user와 eager loading한 정보.
 });
 
-router.get('/:id', data.getTrainerPost, data.getHisTrainees, data.getTrainerInfo, function(req,res,next){
-    //id에 해당하는 trainer 데이터를 DB에서 가져와서 페이지에 넘겨줌. 페이지에서 적당한 조작을 통해 예쁘게 출력. 
-    res.render('employ/trainer',{currentUser:req.user, trainer:req.trainerpost, trainees:req.histrainees, trainerinfo:req.trainerinfo, timetable:req.timetable});
+router.get('/:id', data.getTrainerPost, data.getHisTrainees, data.getContractSet, function(req,res,next){
+    //id에 해당하는 trainer 데이터를 DB에서 가져와서 페이지에 넘겨줌. 페이지에서 적당한 조작을 통해 예쁘게 출력.
+    res.render('employ/trainer',{currentUser:req.user, trainer:req.trainerpost, trainees:req.histrainees,timetable:req.timetable, cs:req.contractset});
     
 });
 
@@ -24,11 +24,12 @@ router.get('/:id/contract', auth.isTrainee, data.getContractSet, function(req,re
 
 
 router.post('/:tid/contract/:uid', auth.isTrainee, who.meTrainee, data.setContract, data.getContractTrainer,data.getTrainerName, function(req,res,next){
-    res.render('employ/payment', {contract : req.contract,username:req.trainername });
+    res.render('employ/payment', {contract : req.setcontract,username:req.trainername });
 });
 
-router.post('/payment/:cid', function(req,res,next){
-    res.render('employ/paymentcomplete');
+router.post('/payment/:cid', data.getContract, function(req,res,next){
+    console.log(req.contract);
+    res.render('employ/paymentcomplete',{contract:req.contract, credit:req.body.creditNum, exp:req.body.expiryDate, trainername:req.body.trainername});
 });
 
 module.exports = router;

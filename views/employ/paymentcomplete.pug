@@ -1,5 +1,17 @@
 extends ../layout
 block content
     include ../navigation
-    h1 결제 완료
-    a.btn.btn-primary(href="/") Home
+    br
+    .container-fluid
+        .row
+            .col-md-12.text-center
+                h3.card-header Payment Complete
+                .card-body
+                    h4.card-text Trainer : #{trainername}
+                    h4.card-text Times : #{contract.pt_number}
+                    h4.card-text Cost : #{contract.pt_cost} $
+                    h4.card-text Credit Number : #{credit}
+                    h4.card-text Expiry Date : #{exp}
+    br
+    .div.text-center
+        a.btn.btn-primary(href="/") Home

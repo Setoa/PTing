@@ -1,83 +1,87 @@
+extends layout
+block content
+    table
+        thead
+        tbody.TimeSheet
+            tr
+                td.TimeSheet-head Date / Time
+                td.TimeSheet-colHead 09
+                td.TimeSheet-colHead 10
+                td.TimeSheet-colHead 11
+                td.TimeSheet-colHead 12
+                td.TimeSheet-colHead 13
+                td.TimeSheet-colHead 14
+                td.TimeSheet-colHead 15
+                td.TimeSheet-colHead 16
+                td.TimeSheet-colHead 17
+                td.TimeSheet-colHead 18
+                td.TimeSheet-colHead 19
+                td.TimeSheet-colHead 20
+                td.TimeSheet-colHead 21
+            tr
+                td.TimeSheet-rowHead Monday
+                - for(let i=0; i<13; i++)
+                    td.TimeSheet-cell(data-date="0", data-time=`${i}`)
+                
+            tr
+                td.TimeSheet-rowHead Tuesday
+                - for(let i=0; i<13; i++)
+                    td.TimeSheet-cell(data-date="1", data-time=`${i}`)
+            tr
+                td.TimeSheet-rowHead Wednesday
+                - for(let i=0; i<13; i++)
+                    td.TimeSheet-cell(data-date="2", data-time=`${i}`)
+            tr
+                td.TimeSheet-rowHead Thursday
+                - for(let i=0; i<13; i++)
+                    td.TimeSheet-cell(data-date="3", data-time=`${i}`)
+            tr
+                td.TimeSheet-rowHead Friday
+                - for(let i=0; i<13; i++)
+                    td.TimeSheet-cell(data-date="4", data-time=`${i}`)
+            tr
+                td.TimeSheet-rowHead Saturday
+                - for(let i=0; i<13; i++)
+                    td.TimeSheet-cell(data-date="5", data-time=`${i}`)
+            tr
+                td.TimeSheet-rowHead Sunday
+                - for(let i=0; i<13; i++)
+                    td.TimeSheet-cell(data-date="6", data-time=`${i}`)
+            button(id="submitSchedule") S
+            if(timetable){
+                for slot in timetable{
+                    if(slot.date==$(item).data("date") && slot.time==$(item).data("time")){
+                        $(item).data("user-id",slot.user_id);
+                        $(item).addClass("TimeSheet-ubmit
 
-table
-    thead
-    tbody.TimeSheet
-        tr
-            td.TimeSheet-head Date / Time
-            td.TimeSheet-colHead 09
-            td.TimeSheet-colHead 10
-            td.TimeSheet-colHead 11
-            td.TimeSheet-colHead 12
-            td.TimeSheet-colHead 13
-            td.TimeSheet-colHead 14
-            td.TimeSheet-colHead 15
-            td.TimeSheet-colHead 16
-            td.TimeSheet-colHead 17
-            td.TimeSheet-colHead 18
-            td.TimeSheet-colHead 19
-            td.TimeSheet-colHead 20
-            td.TimeSheet-colHead 21
-        tr
-            td.TimeSheet-rowHead Monday
-            - for(let i=0; i<13; i++)
-                td.TimeSheet-cell(data-date="0", data-time=`${i}`)
-            
-        tr
-            td.TimeSheet-rowHead Tuesday
-            - for(let i=0; i<13; i++)
-                td.TimeSheet-cell(data-date="1", data-time=`${i}`)
-        tr
-            td.TimeSheet-rowHead Wednesday
-            - for(let i=0; i<13; i++)
-                td.TimeSheet-cell(data-date="2", data-time=`${i}`)
-        tr
-            td.TimeSheet-rowHead Thursday
-            - for(let i=0; i<13; i++)
-                td.TimeSheet-cell(data-date="3", data-time=`${i}`)
-        tr
-            td.TimeSheet-rowHead Friday
-            - for(let i=0; i<13; i++)
-                td.TimeSheet-cell(data-date="4", data-time=`${i}`)
-        tr
-            td.TimeSheet-rowHead Saturday
-            - for(let i=0; i<13; i++)
-                td.TimeSheet-cell(data-date="5", data-time=`${i}`)
-        tr
-            td.TimeSheet-rowHead Sunday
-            - for(let i=0; i<13; i++)
-                td.TimeSheet-cell(data-date="6", data-time=`${i}`)
-        button(id="submitSchedule") Submit
-
-script.
-    $("td").each(function(index,item){
-        if(timetable){
-            for slot in timetable{
-                if(slot.date==$(item).data("date") && slot.time==$(item).data("time")){
-                    $(item).data("user-id",slot.user_id);
-                    $(item).addClass("TimeSheet-cell-block");
+    script.
+        $("td").each(function(index,item){cell-block");
+                    }
                 }
             }
-        }
-    });
-    $("td").click(function(ev){
-        if(!$(this).hasClass("TimeSheet-cell-block")){
-            if($(this).hasClass("TimeSheet-cell-selected")) {
-                $(this).removeClass("TimeSheet-cell-selected");
-            } else {
-                $(this).addClass("TimeSheet-cell-selected");
+        });
+        $(document).ready(function(){
+            $("td").click(function(ev){
+            if(!($(this).hasClass("TimeSheet-cell-block"))){
+                if($(this).hasClass("TimeSheet-cell-selected")) {
+                    $(this).removeClass("TimeSheet-cell-selected");
+                } else {
+                    $(this).addClass("TimeSheet-cell-selected");
+                }
             }
-        }
-    });
-    $("#submitSchedule").click(function(ev){
-        let schedule=[];
-        $(".TimeSheet-cell-selected").each(function(index,item){
-            let slot=[$(item).data("date"), $(item).data("time")];
-            schedule.push(slot);
         });
-        $.ajax({
-            url:'/',
-            dataType: 'json',
-            type: 'POST',
-            data: schedule
         });
-    });
+        
+        $("#submitSchedule").click(function(ev){
+            let schedule=[];
+            $(".TimeSheet-cell-selected").each(function(index,item){
+                let slot=[$(item).data("date"), $(item).data("time")];
+                schedule.push(slot);
+            });
+            $.ajax({
+                url:'/',
+                dataType: 'json',
+                type: 'POST',
+                data: schedule
+            });
+        });

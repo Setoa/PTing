@@ -10,4 +10,8 @@ router.get('/', function (req, res, next) {
   else res.render('index', { title: "Someone" });
 });
 
+router.get('/time',function(req,res,next){
+  res.render('timetable');
+});
+
 module.exports = router;

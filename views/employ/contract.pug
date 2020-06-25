@@ -1,8 +1,8 @@
 extends ../layout
 block content
     include ../navigation
-    h1.text-center Contract
     br
+    h1.text-center Contract
     br
     form(action=`/employ/${trainer_id}/contract/${user.id}`, method='post')
         .container-fluid
@@ -11,43 +11,31 @@ block content
                     .col-lg-4(style='float : left; width : 33%')
                         .card
                             .card-body
-                            h6.card-price.text-center PT 10 times
+                            h3.card-price.text-center A Set
                             hr
-                            ul.fa-ul
-                                li
-                                span 10 
-                                span times
-                                li 
-                                span=cs.dataValues.cost10
-                                span $
+                            h5.card-text 10 times
+                            br
+                            h4.card-text #{cs.dataValues.cost10} $
                         hr
                         input.text-center(type='radio', name='checkContract', value='1')
                     .col-lg-4(style='float : left; width : 33%')
                         .card
                             .card-body
-                            h6.card-price.text-center PT 20 times
+                            h3.card-price.text-center B Set
                             hr
-                            ul.fa-ul
-                                li
-                                span 20
-                                span times
-                                li
-                                span=cs.dataValues.cost10
-                                span $
+                            h5.card-text 20 times
+                            br
+                            h4.card-text #{cs.dataValues.cost20} $
                         hr
                         input.text-center(type='radio', name='checkContract', value='2')
                     .col-lg-4(style='float : left; width : 33%')
                         .card.mb-5.mb-lg-0
                             .card-body
-                            h6.card-price.text-center PT 30 times 
+                            h3.card-price.text-center C Set
                             hr
-                            ul.fa-ul
-                                li
-                                span 30
-                                span times
-                                li
-                                span=cs.dataValues.cost10
-                                span $
+                            h5.card-text 30 times
+                            br
+                            h4.card-text #{cs.dataValues.cost30} $
                         hr
                         input.text-center(type='radio', name='checkContract', value='3')
             br

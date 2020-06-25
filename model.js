@@ -142,7 +142,7 @@ const BodyProfile = sequelize.define("bodyprofile", {
         allowNull: false
     }, //소수점 한자리까지. kg/cm =>직접 입력하는 값이 아니라 height, weight로 계산할 것.
     bmr: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DOUBLE,
         allowNull: false
     }, //kcal. =>직접 입력하는게 아니라 height, weight로 계산할 것.
     note: {

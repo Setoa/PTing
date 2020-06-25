@@ -1,19 +1,26 @@
 extends ../layout
 block content
     include ../navigation
-    
-    p Current Contract
-    ul
-        li Trainer : #{username}
-        li Cost : #{contract.dataValues.pt_cost}
-        li Time : #{contract.dataValues.pt_number}
-
-    p Payment
+    br
     form(method="POST" action=`/employ/payment/${contract.dataValues.id}`)
-        label(for="credit") Credit Account Number : 
-        input(type="text" name="creditNum" id="credit")
-        br
-        label(for="expiry") Expiry Date : 
-        input(type="text" name="expiryDate" id="expiry")
-        br
-        button(type="submit") Pay
+        .container-fluid.text-center
+            .row.text-center
+                .col-md-6
+                    .card
+                        h4.card-header Contract Information
+                        .card-body(style="min-height:150px;")
+                            p.card-text Trainer : #{username}
+                            p.card-text Times : #{contract.dataValues.pt_number}
+                            p.card-text Cost : #{contract.dataValues.pt_cost} $
+                .col-md-6
+                    .card
+                        h4.card-header Payment
+                        .card-body(style="min-height:150px;")
+                            label(for="credit") Credit Account Number :  
+                            input(type="text" name="creditNum" id="credit")
+                            br
+                            label(for="expiry") Expiry Date :  
+                            input(type="text" name="expiryDate" id="expiry")
+                            input(type="hidden" name="trainername" value=`${username}`)
+            br
+            button.btn.btn-primary.btn-lg(type="submit") Pay

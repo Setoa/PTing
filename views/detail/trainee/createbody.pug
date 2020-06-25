@@ -1,0 +1,27 @@
+extends ../../layout
+block content
+    include ../../navigation
+    form(method="POST" action=`/detail/trainee/${id}/bodyprofile`)
+        .row.text-center
+            .row
+                .col-md-3
+                    .card
+                        h5.card-header Age
+                        .card-body
+                            input(type="text" name="age" placeholder="Age")
+                .col-md-3
+                    .card
+                        h5.card-header Height
+                        .card-body
+                            input(type="text" name="height" placeholder="Height")
+                .col-md-3
+                    .card
+                        h5.card-header Weight
+                        .card-body
+                            input(type="text" name="weight" placeholder="Weight")
+                .col-md-3
+                    .card
+                        h5.card-header Note
+                        .card-body
+                            input(type="text" name="note" placeholder="Note")
+        button.btn.btn-primary(type="submit") Create

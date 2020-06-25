@@ -13,12 +13,12 @@ block content
                         .card
                             h5.card-header Name
                             .card-body
-                                p.card-text #{user.dataValues.username}
+                                p #{user.username}
                     .col-md-4
                         .card
                             h5.card-header E-Mail
                             .card-body
-                                p.card-text #{user.dataValues.email}
+                                p.card-text #{user.email}
                     .col-md-4
                         .card
                             h5.card-header Phone Number
@@ -29,9 +29,9 @@ block content
             .col-md-12
                 .card
                     h5.card-header
-                        | Contract Trainer
+                        | My Trainer
                     .card-body
-                        .row
+                        .row(style="min-width:700px;")
                             .col-md-3
                                 a(href=`/detail/trainer/${trainer.trainer.dataValues.id}`) #{trainername}
                             .col-md-3 010-1111-1111
@@ -57,12 +57,6 @@ block content
                         .card-body
                             p #{bodyprofile.dataValues.weight} Kg
             .row
-                .col-md-12
-                    .card
-                        h5.card-header Trainer's Note
-                        .card-body
-                            p #{bodyprofile.dataValues.note}
-            .row
                 .col-md-6
                     .card
                         h5.card-header BMI
@@ -73,12 +67,12 @@ block content
                         h5.card-header BMR
                         .card-body
                             p #{bodyprofile.dataValues.bmr}
-        br
-        .row.text-center
-            .col-md-6
-                button.btn.btn-primary Modify
-            .col-md-6
-                a.btn.btn-primary(href=`/detail/trainee/${traineeid}/bodyprofile`) Create
+            .row
+                .col-md-12
+                    .card
+                        h5.card-header Trainer's Note
+                        .card-body
+                            p #{bodyprofile.dataValues.note}
         br
         .row.text-center
             .col-md-12
@@ -133,25 +127,63 @@ block content
                                     td.TimeSheet-rowHead Sunday
                                     - for(let i=0; i<13; i++)
                                         td.TimeSheet-cell(data-date="6", data-time=`${i}`)
+        br
+        a.btn.btn-primary(id="scsubmit") Change
+
+
     script.
+
+
         $(document).ready(function(){
+            console.log(schedule)
             $("td").each(function(index,item){
-                if(timetable){
-                    for slot in schedule{
-                        const slotData=slot.dataValues;
-                        if(slotData.date==$(item).data("date") && slotData.time==$(item).data("time")){
-                            if(slotData.user_id!=user.dataValues.id){
-                                $(item).data("user-id",slotData.user_id);
-                                $(item).addClass("TimeSheet-cell-block");
-                            }
-                            if(slotData.user_id==user.dataValues.id){
-                                $(item).data("user-id",slotData.user_id);
-                                $(item).addClass("TimeSheet-cell-selected");
-                            }
+            if(schedule){
+                for slot in schedule{
+                    const slotData=slot.dataValues;
+                    if(slotData.date==$(item).data("date") && slotData.time==$(item).data("time")){
+                        if(slotData.user_id!=user.id){
+                            $(item).data("user-id",slotData.user_id);
+                            $(item).addClass("TimeSheet-cell-block");
+                        }
+                        if(slotData.user_id==user.id){
+                            $(item).data("user-id",slotData.user_id);
+                            $(item).addClass("TimeSheet-cell-selected");
                         }
                     }
                 }
-            });
+            }
+        });
         });
         
-        
+        $(document).on('click','td',function(){
+            alert("click");
+            if(!($(this).hasClass("TimeSheet-cell-block"))){
+                if($(this).hasClass("TimeSheet-cell-selected")) {
+                    $(this).removeClass("TimeSheet-cell-selected");
+                } else {
+                    $(this).addClass("TimeSheet-cell-selected");
+                }
+            }
+        });
+        //- $(".TimeSheet-cell").click(function(ev){
+        //-     if(!($(this).hasClass("TimeSheet-cell-block"))){
+        //-         if($(this).hasClass("TimeSheet-cell-selected")) {
+        //-             $(this).removeClass("TimeSheet-cell-selected");
+        //-         } else {
+        //-             $(this).addClass("TimeSheet-cell-selected");
+        //-         }
+        //-     }
+        //- });
+        //- $("#scsubmit").click(function(ev){
+        //-     let schedule=[];
+        //-     $(".TimeSheet-cell-selected").each(function(index,item){
+        //-         let slot=[$(item).data("date"), $(item).data("time")];
+        //-         schedule.push(slot);
+        //-     });
+        //-     $.ajax({
+        //-         url:`/schedule/ajax/${trainer.trainer.dataValues.id}/${user.id}`,
+        //-         dataType: 'json',
+        //-         type: 'POST',
+        //-         data: schedule
+        //-     });
+        //- });                    

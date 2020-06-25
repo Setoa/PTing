@@ -3,106 +3,130 @@
 extends ../layout
 block content
     include ../navigation
-    .container
-        .row.text-center
-            .col-md-12
-                h1 Trainer Detail
-                br
-                br
-                .row
-                    .col-md-6
-                        img(alt="Trainer image" src="https://topclass.chosun.com/news_img/1602/1602_108_2.jpg" width="350" height="300")
-                    .col-md-6
-                        .infoee
-                            ul
-                                - const tData=trainer
-                                li.list-item Name : #{tData.user.username}
-                                li.list-item E-Mail : #{tData.user.email}
+    .container-fluid.text-center
+        .row
+            .col-md-4
+                img(alt="Trainer image" src="https://topclass.chosun.com/news_img/1602/1602_108_2.jpg" width="300" height="300")
+            .col-md-8
+                .row(style="min-height:300px;")
+                    .col-md-4
+                        .card
+                            h5.card-header Name
+                            .card-body
+                                | #{trainer.user.username}
+                    .col-md-4
+                        .card
+                            h5.card-header E-Mail
+                            .card-body
+                                p.card-text #{trainer.user.email}
+                    .col-md-4
+                        .card
+                            h5.card-header Phone Number
+                            .card-body
+                                p.card-text 010-1111-1111
+        br
         .row
             .col-md-12
-                h3 Trainer Information
-                .row
-                    .col-md-8
-                        table(text-align="center")
-                            thead
-                                tr
-                                    th 자격증 이름
-                                    th 자격증 번호
-                            tbody
-                                tr
-                                    td 생활스포츠지도자
-                                    td KF162836
-                                tr
-                                    td 요가지도자
-                                    td LE001921
-                    .col-md-4
-                        table
-                            thead
-                                tr
-                                    th
-                                        h4 경력 사항
-                            tbody
-                                tr
-                                    td=trainerinfo.dataValues.career
-        - if(currentUser.usertype==2)
-            a(href=`/employ/${tData.id}/contract` class="btn btn-primary") Contract
-        - if(currentUser.usertype==1)
-            button.btn.btn-warning Contract
-    br
-    br
-    br
-
-
-    .container
+                .card
+                    h5.card-header
+                        | Trainer Information
         .row.text-center
-            h3 Timetable
-            table.text-center(style="margin:auto;")
-                thead
-                tbody.TimeSheet
-                    tr
-                        td.TimeSheet-head Date / Time
-                        td.TimeSheet-colHead 09
-                        td.TimeSheet-colHead 10
-                        td.TimeSheet-colHead 11
-                        td.TimeSheet-colHead 12
-                        td.TimeSheet-colHead 13
-                        td.TimeSheet-colHead 14
-                        td.TimeSheet-colHead 15
-                        td.TimeSheet-colHead 16
-                        td.TimeSheet-colHead 17
-                        td.TimeSheet-colHead 18
-                        td.TimeSheet-colHead 19
-                        td.TimeSheet-colHead 20
-                        td.TimeSheet-colHead 21
-                    tr
-                        td.TimeSheet-rowHead Monday
-                        - for(let i=0; i<13; i++)
-                            td.TimeSheet-cell(data-date="0", data-time=`${i}`)
-                        
-                    tr
-                        td.TimeSheet-rowHead Tuesday
-                        - for(let i=0; i<13; i++)
-                            td.TimeSheet-cell(data-date="1", data-time=`${i}`)
-                    tr
-                        td.TimeSheet-rowHead Wednesday
-                        - for(let i=0; i<13; i++)
-                            td.TimeSheet-cell(data-date="2", data-time=`${i}`)
-                    tr
-                        td.TimeSheet-rowHead Thursday
-                        - for(let i=0; i<13; i++)
-                            td.TimeSheet-cell(data-date="3", data-time=`${i}`)
-                    tr
-                        td.TimeSheet-rowHead Friday
-                        - for(let i=0; i<13; i++)
-                            td.TimeSheet-cell(data-date="4", data-time=`${i}`)
-                    tr
-                        td.TimeSheet-rowHead Saturday
-                        - for(let i=0; i<13; i++)
-                            td.TimeSheet-cell(data-date="5", data-time=`${i}`)
-                    tr
-                        td.TimeSheet-rowHead Sunday
-                        - for(let i=0; i<13; i++)
-                            td.TimeSheet-cell(data-date="6", data-time=`${i}`)
+            .col-md-7
+                .card
+                    h5.card-header
+                        | Career
+                    .card-body
+                        p.card-text Ajou Gym(2020-06-15~)
+                        p.card-text Suwon Gym(2016-01-01~2017-12-18)
+                        p.card-text Wuman Gym(2015-02-27~2016-01-01)
+            .col-md-5
+                .card
+                    h5.card-header
+                        | Certification
+                    .card-body
+                        p.card-text 생활스포츠지도자 - KF162836
+                        p.card-text 요가지도자 - LE001921
+        br
+        .row
+            .col-md-12
+                .card
+                    h5.card-header
+                        | Timetable
+                    .card-body
+                        table.text-center(style="margin:auto;")
+                            thead
+                            tbody.TimeSheet
+                                tr
+                                    td.TimeSheet-head Date / Time
+                                    td.TimeSheet-colHead 09
+                                    td.TimeSheet-colHead 10
+                                    td.TimeSheet-colHead 11
+                                    td.TimeSheet-colHead 12
+                                    td.TimeSheet-colHead 13
+                                    td.TimeSheet-colHead 14
+                                    td.TimeSheet-colHead 15
+                                    td.TimeSheet-colHead 16
+                                    td.TimeSheet-colHead 17
+                                    td.TimeSheet-colHead 18
+                                    td.TimeSheet-colHead 19
+                                    td.TimeSheet-colHead 20
+                                    td.TimeSheet-colHead 21
+                                tr
+                                    td.TimeSheet-rowHead Monday
+                                    - for(let i=0; i<13; i++)
+                                        td.TimeSheet-cell(data-date="0", data-time=`${i}`)
+                                    
+                                tr
+                                    td.TimeSheet-rowHead Tuesday
+                                    - for(let i=0; i<13; i++)
+                                        td.TimeSheet-cell(data-date="1", data-time=`${i}`)
+                                tr
+                                    td.TimeSheet-rowHead Wednesday
+                                    - for(let i=0; i<13; i++)
+                                        td.TimeSheet-cell(data-date="2", data-time=`${i}`)
+                                tr
+                                    td.TimeSheet-rowHead Thursday
+                                    - for(let i=0; i<13; i++)
+                                        td.TimeSheet-cell(data-date="3", data-time=`${i}`)
+                                tr
+                                    td.TimeSheet-rowHead Friday
+                                    - for(let i=0; i<13; i++)
+                                        td.TimeSheet-cell(data-date="4", data-time=`${i}`)
+                                tr
+                                    td.TimeSheet-rowHead Saturday
+                                    - for(let i=0; i<13; i++)
+                                        td.TimeSheet-cell(data-date="5", data-time=`${i}`)
+                                tr
+                                    td.TimeSheet-rowHead Sunday
+                                    - for(let i=0; i<13; i++)
+                                        td.TimeSheet-cell(data-date="6", data-time=`${i}`)
+        br
+        .row
+            .col-md-12
+                .card
+                    h5.card-header
+                        | Contract Information
+        .row
+            .col-md-4
+                .card
+                    h5.card-header 10 Times
+                    .card-body
+                        p.card-text #{cs.dataValues.cost10} $
+            .col-md-4
+                .card
+                    h5.card-header 20 Times
+                    .card-body
+                        p.card-text #{cs.dataValues.cost20} $
+            .col-md-4
+                .card
+                    h5.card-header 30 Times
+                    .card-body
+                        p.card-text #{cs.dataValues.cost30} $
+        br
+        - if(currentUser.usertype==2)
+            a(href=`/employ/${trainer.dataValues.id}/contract` class="btn btn-primary btn-lg") Contract
+        - if(currentUser.usertype==1)
+            button.btn.btn-warning.btn-lg Contract
 
         
 

@@ -1,8 +1,9 @@
-extends ../layout
+extends ../../layout
 block content
     include ../../navigation
-    .container-fluid.text-center
     h1 Trainer MyPage
+    br
+    .container-fluid.text-center
         .row
             .col-md-4
                 img(alt="Trainer image" src="https://topclass.chosun.com/news_img/1602/1602_108_2.jpg" width="300" height="300")
@@ -12,12 +13,12 @@ block content
                         .card
                             h5.card-header Name
                             .card-body
-                                | #{trainer.user.username}
+                                | #{user.username}
                     .col-md-4
                         .card
                             h5.card-header E-Mail
                             .card-body
-                                p.card-text #{trainer.user.email}
+                                p.card-text #{user.email}
                     .col-md-4
                         .card
                             h5.card-header Phone Number
@@ -30,13 +31,13 @@ block content
                     h5.card-header
                         | Contract List
                     .card-body
-                        each contract in rows.rows
-                            p
-                                a(href=`/detail/${traineeid}`) #{traineename}
-                            p 010-2222-2222
-                            p #{remain}
-                            p #{cost}
-                            p #{schedule}
+                        .row(style="min-width:700px;")
+                            each contract in trainees.rows
+                                .col-md-3
+                                    a(href=`/detail/trainee/${contract.trainee.dataValues.id}`) #{contract.trainee.dataValues.username}
+                                .col-md-3 010-2222-2222
+                                .col-md-3 #{contract.dataValues.pt_remain} times
+                                .col-md-3 #{contract.dataValues.pt_cost} $
         .row
             .col-md-12
                 .card
